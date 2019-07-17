@@ -2,18 +2,20 @@ package edu.mum.cs544.online_store.controller;
 
 import edu.mum.cs544.online_store.model.Product;
 import edu.mum.cs544.online_store.service.ProductService;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 
 @Controller
 @RequestMapping("/products")
@@ -21,51 +23,81 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping
-    public String getAll(Model model, HttpSession session){
+    @GetMapping("/list")
+    public String getAll(Model model) {
         model.addAttribute("products", productService.findAll());
 //        List<Product> products = new ArrayList<>();
         session.setAttribute("total",0.0);
         return "productList";
     }
 
-    @GetMapping("/detail")
-    public String getProductDetail(){
-        return "productDetail";
+
+    @GetMapping("/findbyid/{id}")
+    public String getProductById(@PathVariable long id, Model model) {
+        model.addAttribute("product", productService.findById(id));
+        return "productEdit";
     }
 
-    @GetMapping("/{id}")
-    public String getProductById(@PathVariable  long id, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute(productService.findById(id));
-        return "redirect:detail";
-    }
-
-    @GetMapping("/edit")
-    public String getProductForm(Model model) {
-        if (!model.containsAttribute("product"))
-            model.addAttribute("product", new Product());
+    @GetMapping("/addForm")
+    public String getAddForm(Model model) {
+        model.addAttribute("product", new Product());
         return "productForm";
     }
 
-    @GetMapping("/add")
-    public String getAddForm(RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("action", "Add");
-        return "redirect:edit";
-    }
-
-    @GetMapping("/update")
-    public String getUpdateForm(RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("action", "Update");
-        return "redirect:edit";
-    }
-
-
-    @PostMapping("/edit")
-    public String saveProduct(Product product, RedirectAttributes redirectAttributes) {
-        String s = "test";
+    @PostMapping("/add")
+    public String addProduct(@ModelAttribute("product") Product product, RedirectAttributes redirectAttributes) {
         productService.save(product);
         redirectAttributes.addFlashAttribute("product", product);
         return "redirect:detail";
     }
 
+    @PostMapping("/update/{id}")
+    public String updateProduct(Product product) {
+        productService.update(product);
+
+        return "redirect:/products/list";
+    }
+
+    @GetMapping(value = "/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        productService.deleteById(id);
+        return "redirect:/products/list";
+    }
+
+    @GetMapping("/detail")
+    public String get(Model model) {
+
+        return "productDetail";
+    }
+
+    @GetMapping(value = "/getProductPhoto")
+//    public void productImage(HttpServletRequest request, HttpServletResponse response, Model model
+//                             ) throws IOException {
+//        long id = Long.parseLong(request.getParameter("id"));
+//        Product product = null;
+//        if (id != 0) {
+//            product = this.productService.findById(id);
+//        }
+//        if (product != null && product.getImage() != null) {
+//            response.setContentType("image/jpeg");
+//            response.getOutputStream().write(product.getImage());
+//        }
+//        response.getOutputStream().close();
+//    }
+    public void showImage(@RequestParam("id") Long itemId, HttpServletResponse response, HttpServletRequest request)
+            throws ServletException, IOException {
+
+
+        Product product = productService.findById(itemId);
+        response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+        response.getOutputStream().write(product.getImage());
+
+
+        response.getOutputStream().close();
+    }
 }
+
+
+
+
+

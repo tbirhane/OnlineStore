@@ -2,15 +2,16 @@ package edu.mum.cs544.online_store.model;
 
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 
 @Data
 @RequiredArgsConstructor
+@Getter
 @Entity
 public class Product {
 
@@ -21,6 +22,12 @@ public class Product {
     private String description;
     private double price;
     private int quantity;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] image;
 
 
+    public byte[] getImage() {
+        return image;
+    }
 }

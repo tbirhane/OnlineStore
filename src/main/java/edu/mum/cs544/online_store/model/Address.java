@@ -1,13 +1,15 @@
 package edu.mum.cs544.online_store.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
-@RequiredArgsConstructor
+
 @Entity
+@Data
+@NoArgsConstructor
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

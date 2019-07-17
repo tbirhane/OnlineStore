@@ -5,6 +5,7 @@ import edu.mum.cs544.online_store.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Blob;
 import java.util.List;
 
 @Service
@@ -33,7 +34,16 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void delete(Product product) {
-        productRepository.delete(product);
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
+
     }
+
+//    @Override
+//    public byte[] getPhotoById(Long id) {
+//        //return null;
+//        return productRepository.getPhotoById(id);
+//    }
+
+
 }
