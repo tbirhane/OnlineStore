@@ -1,4 +1,4 @@
-package edu.mum.cs544.online_store.config;//package com.instagram.myInstagram.config;
+//package edu.mum.cs544.online_store.config;//package com.instagram.myInstagram.config;
 //import org.springframework.context.annotation.Configuration;
 //
 //import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;

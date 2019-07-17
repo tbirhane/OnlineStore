@@ -32,11 +32,17 @@ public class AccountController {
         return "redirect:/user/list";
     }
 
+    @GetMapping("/list")
+    public String getUsers(Model model) {
+        model.addAttribute("users", userService.findAll());
+        return "account/userList";
+    }
+
     @GetMapping("/register")
     public String getRegistrationPage(Model model) {
-        if(!model.containsAttribute("userAccount"))
-            model.addAttribute("userAccount", new RegistrationFormDTO());
-        return "registrationForm";
+        if(!model.containsAttribute("registrationFormDTO"))
+            model.addAttribute("registrationFormDTO", new RegistrationFormDTO());
+        return "account/registrationForm";
     }
 
     @PostMapping("/register")
@@ -51,12 +57,6 @@ public class AccountController {
         return "redirect:list";
     }
 
-    @GetMapping("/list")
-    public String getUsers(Model model) {
-        model.addAttribute("users", userService.findAll());
-        return "userList";
-    }
-
     @GetMapping("/delete/{id}")
     public String deleteUserById(@PathVariable long id) {
         userService.deleteById(id);
@@ -67,7 +67,7 @@ public class AccountController {
     public String getEditPage(@PathVariable long id, Model model) {
         User user = userService.findById(id);
         model.addAttribute("user", user);
-        return "userForm";
+        return "account/userInfoUpdateForm";
     }
 
     @PostMapping("/edit")
@@ -81,7 +81,7 @@ public class AccountController {
     @GetMapping("/details/{id}")
     public String getUserDetails(@PathVariable long id, Model model) {
         model.addAttribute("user", userService.findById(id));
-        return "userDetail";
+        return "account/userDetail";
     }
 
     @GetMapping("/edit/account/{id}")
@@ -91,7 +91,7 @@ public class AccountController {
         model.addAttribute("user",user);
         model.addAttribute("account",account);
         model.addAttribute("accountFormDTO", new AccountFormDTO(account.getUserName()));
-        return "accountForm";
+        return "account/credentialUpdateForm";
     }
 
     @PostMapping("/edit/account")
