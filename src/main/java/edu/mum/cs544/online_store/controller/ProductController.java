@@ -30,6 +30,13 @@ public class ProductController {
         session.setAttribute("total",0.0);
         return "product/productList";
     }
+
+    @GetMapping("/orderlist")
+    public String getOrder(Model model) {
+       // model.addAttribute("customerOrder", productService.findAll());
+
+        return "checkout/orderConfirmation";
+    }
 }
 
 
