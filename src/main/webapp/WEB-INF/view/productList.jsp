@@ -8,20 +8,31 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Products currently in the shop</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
 	<h1>Products currently in the shop</h1>
-	<table>
+	<table class="table table-dark">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Descrption </th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
 		<c:forEach var="product" items="${products}">
 			<tr>
 				<td>${product.name}</td>
 				<td>${product.description}</td>
-				<td>${product.quantity}</td>
 				<td>${product.price}</td>
-<%--				<sec:authorize access="hasRole('ADMIN')">--%>
-<%--					<td><a href="books/${book.id}">edit</a></td>--%>
-<%--				</sec:authorize>--%>
+				<td>${product.quantity}</td>
+				<td><a href="findbyid/${product.id}">edit</a></td>
+				<td><a href="delete/${product.id}">delete</a></td>
+
 			</tr>
 		</c:forEach>
 	</table>
@@ -29,7 +40,8 @@
 <%--	<sec:authorize access="hasRole('ADMIN')">--%>
 <%--		<a href="books/add"> Add a book</a>--%>
 <%--	</sec:authorize>--%>
-	<a href="logout">Logout</a>
+	<%--<a href="logout">Logout</a>--%>
+
 </body>
 
 </html>

@@ -24,7 +24,7 @@ public class User {
     private Cart cart;
     @OneToMany
     @JoinColumn(name = "user_id")
-    private List<Order> orders;
+    private List<CustomerOrders> orders;
 
 
 }
