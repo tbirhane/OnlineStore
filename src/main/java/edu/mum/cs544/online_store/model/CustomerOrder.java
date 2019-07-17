@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @RequiredArgsConstructor
 @Entity
-public class Order {
+public class CustomerOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
