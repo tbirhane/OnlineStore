@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 @RequestMapping("/products")
 public class ProductController {
@@ -18,8 +22,10 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public String getAll(Model model){
+    public String getAll(Model model, HttpSession session){
         model.addAttribute("products", productService.findAll());
+//        List<Product> products = new ArrayList<>();
+        session.setAttribute("total",0.0);
         return "productList";
     }
 
@@ -61,7 +67,5 @@ public class ProductController {
         redirectAttributes.addFlashAttribute("product", product);
         return "redirect:detail";
     }
-
-
 
 }
