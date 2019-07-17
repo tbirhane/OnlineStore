@@ -1,0 +1,32 @@
+body{
+    padding-top: 10%;
+}
+#main{
+    width: 50%;
+   display: block;
+   margin: auto;
+   background-color: lightgray;
+   padding: 10px;
+}
+.row{
+    padding: 10px;
+}
+
+#id1{
+    display: none;
+}
+#pop{
+    display: none;
+}
+#message{
+    background-color: #f1f1f1;
+    color: green;
+    font-size: medium;
+    font-style: italic;
+    font-family: 'DejaVu Sans Mono', monospace;
+}
+#message-box{
+
+    width: 50%;
+    margin: auto;
+}

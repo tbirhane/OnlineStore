@@ -26,6 +26,8 @@ public class ProductController {
     @GetMapping("/list")
     public String getAll(Model model) {
         model.addAttribute("products", productService.findAll());
+//        List<Product> products = new ArrayList<>();
+        session.setAttribute("total",0.0);
         return "productList";
     }
 
