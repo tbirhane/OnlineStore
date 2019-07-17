@@ -90,6 +90,7 @@ public class CartController {
     public String getPayment(){
         return "checkout/paymentInfo";
     }
+
     @PostMapping(value = "paymentInfo")
     public String addPayment(PaymentInfo paymentInfo, HttpSession session){
 

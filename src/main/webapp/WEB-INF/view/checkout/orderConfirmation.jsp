@@ -16,34 +16,30 @@
        <fieldset class="scheduler-border">
            <legend class="scheduler-border">ShippingAddress</legend>
            <div class="control-group">
-               <label class="control-label input-label" for="street">Street :</label>
                <div class="controls bootstrap-timepicker">
-                   <input type="text" class="street" id="street" name="${customerOrder.shippingAddress.street}"  />
+                   <p> Street : ${customerOrder.shippingAddress.street} </p>
                    <i class="icon-time"></i>
                </div>
-               <label class="control-label input-label" for="city">City :</label>
                <div class="controls bootstrap-timepicker">
-                   <input type="text" class="city" id="city" name="${customerOrder.shippingAddress.city}"  />
+                   <p> City : ${customerOrder.shippingAddress.city} </p>
                    <i class="icon-time"></i>
                </div>
-               <label class="control-label input-label" for="state">State :</label>
                <div class="controls bootstrap-timepicker">
-                   <input type="text" class="state" id="state" name="${customerOrder.shippingAddress.state}" />
+                   <p> State : ${customerOrder.shippingAddress.state} </p>
                    <i class="icon-time"></i>
                </div>
-               <label class="control-label input-label" for="zipe">ZipeCode :</label>
                <div class="controls bootstrap-timepicker">
-                   <input type="text" class="zipe" id="zipe" name="${customerOrder.shippingAddress.zipe}" />
+                   <p> Zip: ${customerOrder.shippingAddress.zip} </p>
                    <i class="icon-time"></i>
                </div>
 
            </div>
        </fieldset>
-       <c:forEach var="order" items="${customerOrder}">
+       <c:forEach var="order" items="${customerOrder.orderLineList}">
 
               <P>Product Name:   ${order.product.name}</P>
               <P>Product Price:${order.product.price}</P>
-              <p>Product Quantiy:${order.orderLineList.quantity}</p>
+              <p>Product Quantiy:${order.quantity}</p>
 
 
        </c:forEach>
