@@ -23,53 +23,79 @@ public class CartController {
     private ProductService productService;
     @Autowired
     private ICustomerOrderService customerOrderService;
+
     //Add item to a cart
     @PostMapping(value = "addtocart", consumes = "application/json",produces = "application/json")
     public @ResponseBody OrderLine addToCart(@RequestBody OrderLine orderLine, HttpSession session){
-        System.out.println("Hi cart");
-        List<OrderLine> items;
-        double subtotal = 0.0;
-        double currentSubTotal = orderLine.getProduct().getPrice()*orderLine.getQuantity();
+
+        long productId = orderLine.getProduct().getId();
+        int quantity = orderLine.getQuantity();
+
+        Product product = productService.findById(productId);
+        Cart cart = null;
         if(session.getAttribute("cart") == null){
-            items = new ArrayList<>();
-            session.setAttribute("total", 0.0);
+            cart = new Cart();
+        }else {
+            cart = (Cart) session.getAttribute("cart");
         }
-        else {
-            items = (List<OrderLine>) session.getAttribute("cart");
-            subtotal = (double) session.getAttribute("total");
-        }
-        System.out.println(orderLine.getProduct().getName());
-        orderLine.setId(null);
-        items.add(orderLine);
+        cart.addProduct(product, quantity);
 
-        Cart cart = new Cart();
-        cart.setOrderLines(items);
-        session.setAttribute("cartObject",cart);
-
-        session.setAttribute("total", (subtotal+currentSubTotal));
-        session.setAttribute("cart", items);
+//        System.out.println("Hi cart");
+//        List<OrderLine> items;
+//        double subtotal = 0.0;
+//        double currentSubTotal = orderLine.getProduct().getPrice()*orderLine.getQuantity();
+//        if(session.getAttribute("cart") == null){
+//            items = new ArrayList<>();
+//            session.setAttribute("total", 0.0);
+//        }
+//        else {
+//            items = (List<OrderLine>) session.getAttribute("cart");
+//            subtotal = (double) session.getAttribute("total");
+//        }
+//        System.out.println(orderLine.getProduct().getName());
+//        orderLine.setId(null);
+//        items.add(orderLine);
+//
+//        Cart cart = new Cart();
+//        cart.setOrderLines(items);
+//        session.setAttribute("cartObject",cart);
+//
+//        session.setAttribute("total", (subtotal+currentSubTotal));
+//
+//        session.setAttribute("cart", items);
+        session.setAttribute("cart",cart);
         return orderLine;
     }
     //Remove item from cart
     @PostMapping(value = "removeItem", consumes = "application/json", produces = "application/json")
     public @ResponseBody
     ProductUtil removeItemCart(@RequestBody ProductUtil removedProduct, HttpSession session){
-        System.out.println("Remove Item");
-        List<OrderLine> items = (List<OrderLine>) session.getAttribute("cart");
-        System.out.println("id = "+removedProduct.getId());
-        //remove element
-        double itemPrice =0.0;
-        for(OrderLine orderLine: items){
-            if(orderLine.getId().equals(removedProduct.getId())){
-                itemPrice = orderLine.getQuantity()* orderLine.getProduct().getPrice();
-                items.remove(orderLine);
-                break;
-            }
-        }
-        double subtotal = (double)session.getAttribute("total");
-        session.setAttribute("total", subtotal - itemPrice);
-        session.setAttribute("cart", items);
-        return removedProduct;
+
+        long productId = removedProduct.getId();
+        int quantity = removedProduct.getQuantity();
+
+        Product product = productService.findById(productId);
+        Cart cart = (Cart) session.getAttribute("cart");
+        cart.removeProduct(product, quantity);
+        removedProduct.setTotalPrice(cart.getTotalPrice());
+        session.setAttribute("cart",cart);
+
+//        System.out.println("Remove Item");
+//        List<OrderLine> items = (List<OrderLine>) session.getAttribute("cart");
+//        System.out.println("id = "+removedProduct.getId());
+//        //remove element
+//        double itemPrice =0.0;
+//        for(OrderLine orderLine: items){
+//            if(orderLine.getId().equals(removedProduct.getId())){
+//                itemPrice = orderLine.getQuantity()* orderLine.getProduct().getPrice();
+//                items.remove(orderLine);
+//                break;
+//            }
+//        }
+//        double subtotal = (double)session.getAttribute("total");
+//        session.setAttribute("total", subtotal - itemPrice);
+//        session.setAttribute("cart", items);
+          return removedProduct;
     }
 
 
@@ -96,7 +122,7 @@ public class CartController {
 
         session.setAttribute("paymentInfo",paymentInfo);
 
-        Cart cart = (Cart) session.getAttribute("cartObject");
+        Cart cart = (Cart) session.getAttribute("cart");
         Address address = (Address) session.getAttribute("shippingAddres");
         CustomerOrder customerOrder = new CustomerOrder();
         customerOrder.setOrderDate(new Date());
@@ -107,8 +133,8 @@ public class CartController {
         customerOrderService.save(customerOrder);
         session.setAttribute("customerOrder",customerOrder);
 
-        session.setAttribute("cart",new ArrayList<OrderLine>());
-        session.setAttribute("cartObject", new Cart());
+//        session.setAttribute("cart",new ArrayList<OrderLine>());
+        session.setAttribute("cart", new Cart());
         session.setAttribute("shippingAddress", new Address());
         session.setAttribute("total",0.0);
         //session.invalidate();
