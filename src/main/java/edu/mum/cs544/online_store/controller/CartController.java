@@ -1,9 +1,8 @@
 package edu.mum.cs544.online_store.controller;
 
-import edu.mum.cs544.online_store.model.Cart;
-import edu.mum.cs544.online_store.model.OrderLine;
-import edu.mum.cs544.online_store.model.Product;
-import edu.mum.cs544.online_store.model.ProductUtil;
+import edu.mum.cs544.online_store.model.*;
+import edu.mum.cs544.online_store.service.CustomerOrderService;
+import edu.mum.cs544.online_store.service.ICustomerOrderService;
 import edu.mum.cs544.online_store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +11,7 @@ import com.google.gson.Gson;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -21,6 +21,8 @@ public class CartController {
     private Gson gson;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ICustomerOrderService customerOrderService;
     //Add item to a cart
     @PostMapping(value = "addtocart", consumes = "application/json",produces = "application/json")
     public @ResponseBody OrderLine addToCart(@RequestBody OrderLine orderLine, HttpSession session){
@@ -37,6 +39,7 @@ public class CartController {
             subtotal = (double) session.getAttribute("total");
         }
         System.out.println(orderLine.getProduct().getName());
+        orderLine.setId(null);
         items.add(orderLine);
 
         Cart cart = new Cart();
@@ -74,15 +77,49 @@ public class CartController {
     @GetMapping(value = "checkout")
     public String checkOut(HttpSession session) {
         System.out.println("checkout");
-
-        Long id = new Long(911010);
-
-//        if(id.equals(checkout.getId())){
-//            System.out.println("Checked!");
-//        }
-        return "checkout";
-
+        return "checkout/shippingForm";
     }
+
+    @PostMapping(value = "checkout")
+    public String addShippingAddress(Address address, HttpSession session){
+        session.setAttribute("shippingAddres",address);
+        return "redirect:paymentInfo";
+    }
+
+    @GetMapping(value = "paymentInfo")
+    public String getPayment(){
+        return "checkout/paymentInfo";
+    }
+    @PostMapping(value = "paymentInfo")
+    public String addPayment(PaymentInfo paymentInfo, HttpSession session){
+
+        session.setAttribute("paymentInfo",paymentInfo);
+
+        Cart cart = (Cart) session.getAttribute("cartObject");
+        Address address = (Address) session.getAttribute("shippingAddres");
+        CustomerOrder customerOrder = new CustomerOrder();
+        customerOrder.setOrderDate(new Date());
+        customerOrder.setOrderLineList(cart.getOrderLines());
+        customerOrder.setPaymentInfo(paymentInfo);
+        customerOrder.setShippingAddress(address);
+
+        customerOrderService.save(customerOrder);
+        session.setAttribute("customerOrder",customerOrder);
+
+        session.setAttribute("cart",new ArrayList<OrderLine>());
+        session.setAttribute("cartObject", new Cart());
+        session.setAttribute("shippingAddress", new Address());
+        session.setAttribute("total",0.0);
+        //session.invalidate();
+        return "redirect:/products/orderlist";
+    }
+
+//    @PostMapping(value = "placeOrder")
+//    public String placeOrder(){
+//
+//    }
+
+
 
     @PostMapping(value = "updateCart", consumes = "application/json", produces = "application/json")
     public @ResponseBody Product updateCart(@RequestBody ProductUtil productInfo, HttpSession session){

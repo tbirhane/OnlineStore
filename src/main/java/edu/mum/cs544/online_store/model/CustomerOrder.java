@@ -15,11 +15,12 @@ public class CustomerOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date orderDate;
-    private Long orderNumber;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address shippingAddress;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="order_id")
     private List<OrderLine> orderLineList;
+    @OneToOne(cascade = CascadeType.ALL)
+    private PaymentInfo paymentInfo;
 
 }
