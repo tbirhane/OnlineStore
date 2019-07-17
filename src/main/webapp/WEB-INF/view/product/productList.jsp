@@ -11,34 +11,16 @@
 	<title>Products currently in the shop</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link rel="stylesheet" href="resources/css/mycss.css">
+<%--	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">--%>
+<%--	<link rel="stylesheet" href="resources/css/mycss.css">--%>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="resources/js/script.js" type="text/javascript"></script>
-    <script src="resources/js/billing.js" type="text/javascript"></script>
+	<script src="/resources/js/script.js" type="text/javascript"></script>
+    <script src="/resources/js/billing.js" type="text/javascript"></script>
 </head>
 
 <body>
 	<h1>Products currently in the shop</h1>
 
-<%--	<table>--%>
-<%--		<c:forEach var="product" items="${products}">--%>
-<%--			<tr>--%>
-<%--				<td>${product.name}</td>--%>
-<%--				<td>${product.description}</td>--%>
-<%--				<td>${product.quantity}</td>--%>
-<%--				<td>${product.price}</td>--%>
-<%--				<sec:authorize access="hasRole('ADMIN')">--%>
-<%--					<td><a href="books/${book.id}">edit</a></td>--%>
-<%--				</sec:authorize>--%>
-
-<%--			</tr>--%>
-<%--		</c:forEach>--%>
-<%--	</table>--%>
-
-<%--	<sec:authorize access="hasRole('ADMIN')">--%>
-<%--		<a href="books/add"> Add a book</a>--%>
-<%--	</sec:authorize>--%>
     <div id="main-container">
         <div id="product-container">
             <c:forEach var="product" items="${products}">
@@ -55,7 +37,6 @@
 
 
         <div id="cart-container">
-            <a href="logout">Logout</a>
             <h4> Items in your cart</h4>
             <table id="order-table" class="table table-striped" cellpadding="2" cellspacing="2">
             <tr>
@@ -81,7 +62,7 @@
             </table>
             <h6 id="total-price">Total: $ <c:out value="${total}" default="0.0"/> </h6>
 
-            <form action="products/checkout" method="get">
+            <form action="/products/checkout" method="get">
 
             <input type="submit" value="Check Out" class="btn btn-info"/>
             </form>

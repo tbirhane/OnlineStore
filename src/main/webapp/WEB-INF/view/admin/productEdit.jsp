@@ -21,7 +21,7 @@
             <div class="col-sm-6 offset-sm-3 ">
                 <h1 class="display-4">ProductForm</h1>
                 <div class="info-form">
-<form:form modelAttribute="product" method="post" action="../update/${product.id}">
+<form:form modelAttribute="product" method="post" action="../update/${product.id}" enctype="multipart/form-data">
     <form:hidden path="id"/>
 <div class="input-group mb-3">
     <div class="form-group">

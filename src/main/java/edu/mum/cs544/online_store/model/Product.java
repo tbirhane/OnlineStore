@@ -4,6 +4,7 @@ package edu.mum.cs544.online_store.model;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.Nullable;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -22,12 +23,13 @@ public class Product {
     private String description;
     private double price;
     private int quantity;
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    private byte[] image;
+//    @Lob
+//    @Basic(fetch = FetchType.LAZY)
+//    @Nullable
+//    private byte[] image;
 
-
-    public byte[] getImage() {
-        return image;
-    }
+//
+//    public byte[] getImage() {
+//        return image;
+//    }
 }
