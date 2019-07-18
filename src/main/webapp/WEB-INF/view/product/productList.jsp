@@ -19,8 +19,15 @@
 </head>
 
 <body>
-	<h1>Products currently in the shop</h1>
 
+    <div id="header-container">
+        <a href="list">home</a>
+        <a href="/admin/products/addForm">add product</a>
+        <a href="/login">login</a>
+        <a href="">contact</a>
+
+    </div>
+    <h4>Products currently in the shop</h4>
     <div id="main-container">
         <div id="product-container">
             <c:forEach var="product" items="${products}">
