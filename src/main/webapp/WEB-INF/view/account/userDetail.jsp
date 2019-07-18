@@ -11,7 +11,7 @@
 </head>
 <body>
 <table>
-    <tr><td>Username : ${user.account.userName}</td></tr>
+    <tr><td>Username : ${user.account.username}</td></tr>
     <tr><td>Password : ${user.account.password}</td></tr>
     <tr><td>Role : ${user.account.role}</td></tr>
     <tr><td></td></tr>
