@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccountService implements IAccountService{
@@ -40,6 +41,6 @@ public class AccountService implements IAccountService{
 
     @Override
     public Account findByUserName(String email) {
-        return accountRepository.findByUserName(email);
+        return accountRepository.findAccountByUsername(email);
     }
 }

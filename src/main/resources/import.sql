@@ -8,7 +8,7 @@
 
 insert  into `product` values (1,'LG Phone','LG',100,3),(2,'iPhone Phone','iPhone',100,3),(3,'Huwawe Phone','Huawie',100,3), (4,'Honer Phone','Houner',100,3);
 
-insert into `account` (id, user_name, password, role) values (1,'admin','$2a$10$MWhnPbxTbWqN7RkBI3Vyk.UoM8XFSXM4Lew6pK3ZiJkZImaZGovJe','ADMIN'),(2,'user','$2a$10$MWhnPbxTbWqN7RkBI3Vyk.UoM8XFSXM4Lew6pK3ZiJkZImaZGovJe','USER'),(3,'user2','$2a$10$MWhnPbxTbWqN7RkBI3Vyk.UoM8XFSXM4Lew6pK3ZiJkZImaZGovJe','USER');
+insert into `account` (id, username, password, role) values (1,'admin','$2a$10$MWhnPbxTbWqN7RkBI3Vyk.UoM8XFSXM4Lew6pK3ZiJkZImaZGovJe','ROLE_ADMIN'),(2,'user','$2a$10$MWhnPbxTbWqN7RkBI3Vyk.UoM8XFSXM4Lew6pK3ZiJkZImaZGovJe','ROLE_USER'),(3,'user2','$2a$10$MWhnPbxTbWqN7RkBI3Vyk.UoM8XFSXM4Lew6pK3ZiJkZImaZGovJe','ROLE_USER');
 
 insert into `address` (id, street, city, state, zip) values (1,'1000 N 4th St','Fairfield','IA','52557'),(2,'2020 S 5th St','Los Angeles','CA','90124');
 

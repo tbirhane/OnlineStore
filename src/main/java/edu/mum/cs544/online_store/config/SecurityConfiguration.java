@@ -26,23 +26,35 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
-	@Autowired
-	private DataSource dataSource;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Autowired
+    private DataSource dataSource;
 
-	// Override this
+
+
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+//
+//        auth.userDetailsService(userDetailsService)
+//                .passwordEncoder(getPasswordEncoder());
+//    }
+
+    @Bean
+    public PasswordEncoder getPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
 
 		auth.jdbcAuthentication()
-				.usersByUsernameQuery("select user_name, password, 1 from account where user_name=?")
-				.authoritiesByUsernameQuery("select user_name, role from account where user_name=?")
-				.dataSource(dataSource);
-				//.passwordEncoder(passwordEncoder());
+				.usersByUsernameQuery("select username, password, 1 from account where username=?")
+				.authoritiesByUsernameQuery("select username, role from account where username=?")
+				.dataSource(dataSource)
+				.passwordEncoder(getPasswordEncoder());
 	}
 
 	@Override
@@ -52,27 +64,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
           http.authorizeRequests()
-				  .antMatchers("/", "/login","/logout","/products/list").permitAll()
-				  .anyRequest()
-				  .authenticated()
-				  .antMatchers("/admin**").hasRole("ADMIN")
-				  .and()
+				  .antMatchers("/", "/login","/products/list","/logout").permitAll()
+
+				  .antMatchers("/admin/**").hasRole("ADMIN")
+                  .antMatchers("/checkout").hasRole("USER")
+                 // .anyRequest().authenticated()
+                  .and()
             	.formLogin()
-             // .loginPage("/login")
+              //.loginPage("/login")
                 .permitAll()
                 .and()
             	.logout();
     }
-    //public void addViewControllers(ViewControllerRegistry registry) {
-//  registry.addViewController("/home").setViewName("home");
-//  registry.addViewController("/").setViewName("home");
-//  registry.addViewController("/hello").setViewName("hello");
-//  registry.addViewController("/login").setViewName("login");
-//  registry.addViewController("/register").setViewName("register");
-//  registry.addViewController("/userfollows").setViewName("userfollows");
-//  registry.addViewController("/uploadTamplate").setViewName("uploadTamplate");
-//}
 
 
 }

@@ -50,7 +50,7 @@ public class AccountController {
                                BindingResult result,
                                RedirectAttributes redirectAttributes) {
         // TODO validate inputs
-        Account account = new Account(registrationFormDTO.getEmail(), registrationFormDTO.getPassword(),"USER");
+        Account account = new Account(registrationFormDTO.getEmail(), registrationFormDTO.getPassword(),"ROLE_USER");
         User user = new User(registrationFormDTO.getFirstName(), registrationFormDTO.getLastName());
         user.setAccount(account);
         userService.save(user);
@@ -90,7 +90,7 @@ public class AccountController {
         Account account = user.getAccount();
         model.addAttribute("user",user);
         model.addAttribute("account",account);
-        model.addAttribute("accountFormDTO", new AccountFormDTO(account.getUserName()));
+        model.addAttribute("accountFormDTO", new AccountFormDTO(account.getUsername()));
         return "account/credentialUpdateForm";
     }
 
