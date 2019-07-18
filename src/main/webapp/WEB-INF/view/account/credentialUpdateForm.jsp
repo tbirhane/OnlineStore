@@ -15,7 +15,7 @@
 <form:form modelAttribute="accountFormDTO" action="/user/edit/account" method="post">
     <div>
         <p> Account Details : </p>
-        Username : <form:input path="userName" readonly="true" value="${account.userName}"/><br/>
+        Username : <form:input path="username" readonly="true" value="${account.username}"/><br/>
         Password : <form:input path="oldPassword" placeholder="Enter your current password"/><br/>
         New Password : <form:input path="newPassword" placeholder="Enter new password"/><br/>
 

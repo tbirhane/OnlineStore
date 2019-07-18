@@ -27,9 +27,6 @@ import javax.sql.DataSource;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
     private DataSource dataSource;
 
 
@@ -69,7 +66,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 				  .antMatchers("/", "/login","/products/list","/logout").permitAll()
 
 				  .antMatchers("/admin/**").hasRole("ADMIN")
-                  .antMatchers("/checkout").hasRole("USER")
+                  .antMatchers("/checkout*/**").authenticated()
                  // .anyRequest().authenticated()
                   .and()
             	.formLogin()

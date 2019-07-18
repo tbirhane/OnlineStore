@@ -7,6 +7,7 @@ import edu.mum.cs544.online_store.model.User;
 import edu.mum.cs544.online_store.service.IAccountService;
 import edu.mum.cs544.online_store.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,9 @@ public class AccountController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping
     public String redirect() {
@@ -50,7 +54,7 @@ public class AccountController {
                                BindingResult result,
                                RedirectAttributes redirectAttributes) {
         // TODO validate inputs
-        Account account = new Account(registrationFormDTO.getEmail(), registrationFormDTO.getPassword(),"ROLE_USER");
+        Account account = new Account(registrationFormDTO.getEmail(), passwordEncoder.encode(registrationFormDTO.getPassword()),"ROLE_USER");
         User user = new User(registrationFormDTO.getFirstName(), registrationFormDTO.getLastName());
         user.setAccount(account);
         userService.save(user);
