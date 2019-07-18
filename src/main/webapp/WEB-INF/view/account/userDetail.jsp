@@ -11,19 +11,23 @@
 </head>
 <body>
 <table>
+    <tr><td>Account Information </td></tr>
+    <tr><td></td></tr>
     <tr><td>Username : ${user.account.username}</td></tr>
-    <tr><td>Password : ${user.account.password}</td></tr>
     <tr><td>Role : ${user.account.role}</td></tr>
+    <tr><td></td></tr>
+    <tr><td>User Information </td></tr>
     <tr><td></td></tr>
     <tr><td>Name : ${user.firstName} ${user.lastName}</td></tr>
     <tr><td>Phone : ${user.phone}</td></tr>
+    <tr><td></td></tr>
+    <tr><td>User Address </td></tr>
     <tr><td></td></tr>
     <tr><td>Street : ${user.address.street}</td></tr>
     <tr><td>City : ${user.address.city}</td></tr>
     <tr><td>State : ${user.address.state}</td></tr>
     <tr><td>Zip : ${user.address.zip}</td></tr>
 </table>
-<a href="/user/register"><input type="button" value="Add User"/></a>
-<a href="/user"><input type="button" value="Home"/></a>
+<a href="/"><input type="button" value="Home"/></a>
 </body>
 </html>

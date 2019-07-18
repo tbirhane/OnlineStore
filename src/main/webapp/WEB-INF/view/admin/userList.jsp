@@ -27,13 +27,13 @@
             <td>${user.account.password}</td>
             <td>${user.firstName} ${user.lastName}</td>
             <td>${user.account.role}</td>
-            <td><a href="/user/edit/${user.id}"><input type="button" value="Edit User"></a></td>
-            <td><a href="/user/edit/account/${user.id}"><input type="button" value="Edit Account"></a></td>
-            <td><a href="/user/delete/${user.id}"><input type="button" value="Delete"></a></td>
+            <td><a href="/admin/user/edit/${user.id}"><input type="button" value="Edit User"></a></td>
+            <td><a href="/admin/user/edit/account/${user.id}"><input type="button" value="Edit Account"></a></td>
+            <td><a href="/admin/user/delete/${user.id}"><input type="button" value="Delete"></a></td>
         </tr>
     </c:forEach>
 </table>
-<a href="/user/register"><input type="button" value="Add User"/></a>
+<a href="/"><input type="button" value="Home"/></a>
 </body>
 
 </html>

@@ -38,6 +38,12 @@
     </c:forEach>
 </table>
 
+<form  method="get" action="addForm">
+    <div class="input-group mb-2">
+        <button type="submit" class="btn btn-success">Add Product</button>
+    </div>
+</form>
+
 </body>
 
 </html>

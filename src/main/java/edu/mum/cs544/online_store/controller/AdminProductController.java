@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @Controller
 @RequestMapping("/admin/products")
-public class AdminController {
+public class AdminProductController {
     @Autowired
     private ProductService productService;
 

@@ -28,7 +28,7 @@
     </div>
            <input type="submit" value="Update Account">
 </form:form>
-<a href="/user"><input type="button" value="Home"/></a>
+<a href="/"><input type="button" value="Home"/></a>
 </body>
 
 </html>

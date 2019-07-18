@@ -22,7 +22,7 @@
     </div>
    <input type="submit" value="Register Me">
 </form:form>
-<a href="/user"><input type="button" value="Home"/></a>
+<a href="/"><input type="button" value="Home"/></a>
 </body>
 
 </html>

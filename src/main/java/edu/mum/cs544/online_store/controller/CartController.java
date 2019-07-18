@@ -129,9 +129,16 @@ public class CartController {
         customerOrder.setOrderLineList(cart.getOrderLines());
         customerOrder.setPaymentInfo(paymentInfo);
         customerOrder.setShippingAddress(address);
-
+        for(OrderLine line : customerOrder.getOrderLineList()) {
+            Product p = productService.findById(line.getProduct().getId());
+            p.setQuantity(p.getQuantity()-line.getQuantity());
+            productService.save(p);
+        }
         customerOrderService.save(customerOrder);
         session.setAttribute("customerOrder",customerOrder);
+
+        // calculate quantity
+
 
 //        session.setAttribute("cart",new ArrayList<OrderLine>());
         session.setAttribute("cart", new Cart());

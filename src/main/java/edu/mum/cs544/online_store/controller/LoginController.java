@@ -17,25 +17,39 @@ public class LoginController {
     @Autowired
     private AccountService accountService;
 
-    @GetMapping
+    @GetMapping("/")
     public String redirect(Principal principal, Model model){
-//        if(principal != null) {
-//            String userName = principal.getName();
-//            Account account = accountService.findByUserName(userName);
-//            if (account.getRole().equals("ROLE_ADMIN"))
-//                return "redirect:/admin/";
-//        }
-//        return "redirect:/products/list";
-        String messsage = "none";
-        if (principal != null)
-            messsage = principal.getName();
-        model.addAttribute("message",messsage);
-        return "test";
+        if(principal != null) {
+            String userName = principal.getName();
+            Account account = accountService.findByUserName(userName);
+            if (account.getRole().equals("ROLE_ADMIN"))
+                return "redirect:/admin";
+        }
+        return "redirect:/products/list";
+//        String messsage = "none";
+//        if (principal != null)
+//            messsage = principal.getName();
+//        model.addAttribute("message",messsage);
+//        return "test";
     }
 
+    @GetMapping("/admin")
+    public String getAdminHomePage(){
+        return "admin/adminHomePage";
+    }
+//
+//    @GetMapping(value = "login")
+//    public String getLonin(){
+//        return "account/login";
+//    }
 
-    @GetMapping(value = "login")
-    public String getLonin(){
-        return "account/login";
+    @GetMapping("/error")
+    public String redirectTo404(){
+        return "redirect:/404";
+    }
+
+    @GetMapping("/403")
+    public String get403Page() {
+        return "/error/403";
     }
 }

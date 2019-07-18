@@ -1,6 +1,7 @@
 package edu.mum.cs544.online_store.service;
 
 import edu.mum.cs544.online_store.model.CustomerOrder;
+import edu.mum.cs544.online_store.model.OrderLine;
 import edu.mum.cs544.online_store.repository.CustomerOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

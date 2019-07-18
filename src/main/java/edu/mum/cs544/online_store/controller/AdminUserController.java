@@ -1,7 +1,6 @@
 package edu.mum.cs544.online_store.controller;
 
 import edu.mum.cs544.online_store.dto.AccountFormDTO;
-import edu.mum.cs544.online_store.dto.RegistrationFormDTO;
 import edu.mum.cs544.online_store.model.Account;
 import edu.mum.cs544.online_store.model.User;
 import edu.mum.cs544.online_store.service.IAccountService;
@@ -13,16 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.net.http.HttpResponse;
-import java.security.Principal;
 
 @Controller
-@RequestMapping("/user")
-@SessionAttributes({"user","account"})
-public class AccountController {
+@RequestMapping("/admin/user")
+public class AdminUserController {
 
     @Autowired
     private IAccountService accountService;
@@ -30,32 +25,22 @@ public class AccountController {
     @Autowired
     private IUserService userService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
-    @GetMapping("/register")
-    public String getRegistrationPage(Model model) {
-        if(!model.containsAttribute("registrationFormDTO"))
-            model.addAttribute("registrationFormDTO", new RegistrationFormDTO());
-        return "account/registrationForm";
+    @GetMapping
+    public String redirect() {
+        return "redirect:/user/list";
     }
 
-    @PostMapping("/register")
-    public String registerUser(@ModelAttribute RegistrationFormDTO registrationFormDTO,
-                               BindingResult result,
-                               RedirectAttributes redirectAttributes) {
-        // TODO validate inputs
-        Account account = new Account(registrationFormDTO.getEmail(), passwordEncoder.encode(registrationFormDTO.getPassword()),"ROLE_USER");
-        User user = new User(registrationFormDTO.getFirstName(), registrationFormDTO.getLastName());
-        user.setAccount(account);
-        userService.save(user);
-        return "redirect:list";
+    @GetMapping("/list")
+    public String getUsers(Model model) {
+        model.addAttribute("users", userService.findAll());
+        return "admin/userList";
     }
 
-    @GetMapping("/details/{id}")
-    public String getUserDetails(@PathVariable long id, Model model) {
-        model.addAttribute("user", userService.findById(id));
-        return "account/userDetail";
+    @GetMapping("/delete/{id}")
+    public String deleteUserById(@PathVariable long id) {
+        userService.deleteById(id);
+        return "redirect:/admin/user/list";
     }
 
     @GetMapping("/edit/account/{id}")
@@ -75,11 +60,11 @@ public class AccountController {
         long id = ((User)model.asMap().get("user")).getId();
         account.setPassword(accountFormDTO.getNewPassword());
         accountService.save(account);
-        return "redirect:../details/" + id;
+        return "redirect:/user/details/" + id;
     }
 
     @GetMapping("/edit/{id}")
-    public String getEditPage(@PathVariable long id, Model model, Principal principal) {
+    public String getEditPage(@PathVariable long id, Model model) {
         User user = userService.findById(id);
         model.addAttribute("user", user);
         return "account/userInfoUpdateForm";
@@ -92,5 +77,4 @@ public class AccountController {
         status.setComplete();
         return "redirect:/user/details/" + user.getId();
     }
-
 }

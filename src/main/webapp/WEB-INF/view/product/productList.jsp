@@ -25,8 +25,12 @@
         <c:if test="${loggedIn}">
             <a href="/user/edit/${userId}"> edit profile </a>
             <a href="/user/edit/account/${userId}"> edit account </a>
+            <a href="/logout">logout</a>
         </c:if>
-        <a href="/login">login</a>
+        <c:if test="${not loggedIn}">
+            <a href="/login">login</a>
+        </c:if>
+
         <a href="">contact</a>
 
     </div>
@@ -35,6 +39,7 @@
         <div id="product-container">
             <c:forEach var="product" items="${products}">
                 <div class="products">
+                    <img src="data:image/jpeg;base64,${product.imageStr}" width="50" height="50"/>
                     <h4>${product.name}</h4>
                     <p>${product.description}</p>
                     <p>${product.quantity}</p>
