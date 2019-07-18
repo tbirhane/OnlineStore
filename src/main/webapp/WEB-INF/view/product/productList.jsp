@@ -22,7 +22,10 @@
 
     <div id="header-container">
         <a href="list">home</a>
-        <a href="/admin/products/addForm">add product</a>
+        <c:if test="${loggedIn}">
+            <a href="/user/edit/${userId}"> edit profile </a>
+            <a href="/user/edit/account/${userId}"> edit account </a>
+        </c:if>
         <a href="/login">login</a>
         <a href="">contact</a>
 

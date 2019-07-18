@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @RequiredArgsConstructor
 public class AccountFormDTO {
     @NonNull
-    private String userName;
+    private String username;
     private String oldPassword;
     private String newPassword;
 }
