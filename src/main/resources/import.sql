@@ -6,7 +6,7 @@
 -- INSERT into `product` values (2,'High camera',null,'Huawei',345.0,6);
 -- insert into `product` values (3 ,'Style',null,'LG',450.0,4);
 
-insert  into `product` values (1,'LG Phone','LG',100,3),(2,'iPhone Phone','iPhone',100,3),(3,'Huwawe Phone','Huawie',100,3), (4,'Honer Phone','Houner',100,3);
+insert  into `product` values (1,'LG Phone',null,'LG',100,3),(2,'iPhone Phone',null,'iPhone',100,3),(3,'Huwawe Phone',null,'Huawie',100,3), (4,'Honer Phone',null,'Houner',100,3);
 
 insert into `account` (id, username, password, role) values (1,'admin','$2a$10$MWhnPbxTbWqN7RkBI3Vyk.UoM8XFSXM4Lew6pK3ZiJkZImaZGovJe','ROLE_ADMIN'),(2,'user','$2a$10$MWhnPbxTbWqN7RkBI3Vyk.UoM8XFSXM4Lew6pK3ZiJkZImaZGovJe','ROLE_USER'),(3,'user2','$2a$10$MWhnPbxTbWqN7RkBI3Vyk.UoM8XFSXM4Lew6pK3ZiJkZImaZGovJe','ROLE_USER');
 
