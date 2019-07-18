@@ -62,8 +62,10 @@ function removeItemFromCart(clicked_id) {
     for(var i=0;i<$('#'+id).siblings(); i++){
         console.log($('#'+id).siblings()[i]);
     }
+    var q = $('#'+id).parent().siblings()[3].innerText;
     id = clicked_id.split("-")[1];
-    var removeItem ={id:id,quantity:11};
+    var removeItem ={id:id,quantity:q,totalPrice:0};
+    console.log("quantity="+q);
     $.ajax({
         headers: {
             'Accept': 'application/json',
@@ -89,7 +91,8 @@ function removed(data) {
     var quantity = td.siblings()[3].innerText;
     var tr = td.parent();
     tr.remove();
-    calculateTotal(-(parseFloat(price) * parseInt(quantity)));
+    //calculateTotal(-(parseFloat(price) * parseInt(quantity)));
+    $('#total-price').text("Total: $" + (parseFloat(data.totalPrice)));
 }
 //save item details to cart
 function saveToCart(data) {

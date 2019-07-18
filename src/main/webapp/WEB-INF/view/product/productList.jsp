@@ -47,7 +47,7 @@
                 <th>Quantity</th>
                 <th>Subtotal</th>
             </tr>
-                <c:forEach var="item" items="${cart}">
+                <c:forEach var="item" items="${cart.orderLines}">
                 <tr>
                     <td><button type="button" class="btn btn-danger" id="item-${item.id}" onclick="removeItemFromCart(this.id)">Remove</button></td>
                         <td>${item.product.id}</td>
@@ -60,7 +60,7 @@
                 </tr>
                 </c:forEach>
             </table>
-            <h6 id="total-price">Total: $ <c:out value="${total}" default="0.0"/> </h6>
+            <h6 id="total-price">Total: $ <c:out value="${cart.totalPrice}" default="0.0"/> </h6>
 
             <form action="/products/checkout" method="get">
 

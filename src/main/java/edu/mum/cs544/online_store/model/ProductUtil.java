@@ -8,4 +8,5 @@ import lombok.RequiredArgsConstructor;
 public class ProductUtil {
     private Long id;
     private int quantity;
+    private double totalPrice;
 }
