@@ -10,7 +10,7 @@ import java.sql.Blob;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-
+//
 //    @Query("select photo from Product where id=?1")
 //    byte[] getPhotoById(Long id);
 

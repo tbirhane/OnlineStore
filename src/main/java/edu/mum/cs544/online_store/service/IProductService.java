@@ -11,5 +11,5 @@ public interface IProductService {
     public List<Product> findAll();
     public void update(Product product);
     public void deleteById(Long id);
-  //  public byte[] getPhotoById(Long id);
+    //public byte[] getPhotoById(Long id);
 }

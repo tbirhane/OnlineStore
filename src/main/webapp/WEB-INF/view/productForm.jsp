@@ -52,7 +52,7 @@
         <div class="input-group mb-6">
             <div class="form-group mb-3">
                 <label for="exampleInputQuantity">Image</label>
-                <input type="file" name="image" class="form-control" id="exampleInputImage" >
+                <input type="file" name="productImage" class="form-control" id="productImage" >
             </div>
         </div>
 

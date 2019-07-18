@@ -22,6 +22,7 @@
         <th scope="col">Quantity</th>
         <th scope="col">Edit</th>
         <th scope="col">Delete</th>
+        <th scope="col">Image</th>
     </tr>
     </thead>
     <c:forEach var="product" items="${products}">
@@ -32,15 +33,10 @@
             <td>${product.quantity}</td>
             <td><a href="findbyid/${product.id}">edit</a></td>
             <td><a href="delete/${product.id}">delete</a></td>
-
+            <td><img src="data:image/jpeg;base64,${product.imageStr}" width="50" height="50"/></td>
         </tr>
     </c:forEach>
 </table>
-
-<%--	<sec:authorize access="hasRole('ADMIN')">--%>
-<%--		<a href="books/add"> Add a book</a>--%>
-<%--	</sec:authorize>--%>
-<%--<a href="logout">Logout</a>--%>
 
 </body>
 

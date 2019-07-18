@@ -5,6 +5,7 @@ import edu.mum.cs544.online_store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -40,16 +41,29 @@ public class AdminController {
 
     @PostMapping("/add")
     public String addProduct(@ModelAttribute("product") Product product, RedirectAttributes redirectAttributes) {
-        productService.save(product);
-        redirectAttributes.addFlashAttribute("product", product);
-        return "redirect:detail";
+       try {
+           product.setImageStr(Base64Utils.encodeToString(product.getProductImage().getBytes()));
+           productService.save(product);
+           redirectAttributes.addFlashAttribute("product", product);
+           return "redirect:detail";
+       }catch (Exception ex){
+           ex.printStackTrace();
+           return "redirect:admin/products/addForm";
+       }
     }
 
     @PostMapping("/update/{id}")
-    public String updateProduct(Product product) {
-        productService.update(product);
+    public String updateProduct(Product product,RedirectAttributes redirectAttributes) {
+        try {
+            product.setImageStr(Base64Utils.encodeToString(product.getProductImage().getBytes()));
+            productService.update(product);
+            redirectAttributes.addFlashAttribute("product", product);
+            return "redirect:/admin/products/list";
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return "redirect:admin/products/addForm";
+        }
 
-        return "redirect:/admin/products/list";
     }
 
     @GetMapping(value = "/delete/{id}")
@@ -63,14 +77,5 @@ public class AdminController {
         return "productDetail";
     }
 
-//    @GetMapping(value = "/getProductPhoto")
-//    public void showImage(@RequestParam("id") Long itemId, HttpServletResponse response, HttpServletRequest request)
-//            throws ServletException, IOException {
-//
-//        Product product = productService.findById(itemId);
-//        response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-//        response.getOutputStream().write(product.getImage());
-//        response.getOutputStream().close();
-//    }
 
 }
