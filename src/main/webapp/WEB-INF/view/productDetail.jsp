@@ -15,9 +15,9 @@
 		<tr><td>Description: ${product.description}</td></tr>
 		<tr><td>Price: ${product.price}</td></tr>
 		<tr><td>Quantity: ${product.quantity}</td></tr>
-		<td>Image:<img width="100" height="100" src="getProductPhoto?id=${product.id}"/></td>
+		<td>Image:<img width="50" height="50" src="data:image/jpeg;base64,${product.imageStr}"/></td>
 	</table>
-	<a href="/products/list"><input type="button" value="ProductList"/></a>
+	<a href="/admin/products/list"><input type="button" value="ProductList"/></a>
 </body>
 
 </html>
